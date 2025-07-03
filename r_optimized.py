@@ -44,10 +44,10 @@ def load_languages():
     try:
         with open(LANGUAGES_FILE, 'r', encoding='utf-8') as f:
             languages = [line.strip() for line in f if line.strip()]
-            return languages if languages else ["English", "Mandarin"]
+            return languages if languages else ["English", "Spanish"]
     except Exception as e:
         st.error(f"Error reading languages file: {str(e)}")
-        return ["English", "Mandarin"]
+        return ["English", "Spanish"]
 
 def get_persona_files():
     persona_files = []
