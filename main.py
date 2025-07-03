@@ -3,25 +3,20 @@ from pydantic import BaseModel
 import google.generativeai as genai
 import asyncio
 import time
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 app = FastAPI()
-
-API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyAWMudIst86dEBwP63BqFcy4mdjr34c87o")
-
+API_KEY = "AIzaSyAWMudIst86dEBwP63BqFcy4mdjr34c87o"
 
 bot_names = {
-    "female_friend": "Chloe Tan",
-    "female_mentor": "Mrs. Lim Mei Ling",
-    "female_partner": "Clara Lim",
-    "male_friend": "Jayden Lim",
-    "male_mentor": "Mr. Tan Boon Huat",
-    "male_partner": "Ryan Tan"
+    "female_friend": "Mariana Garcia",
+    "female_mentor": "Carmen Martinez",
+    "female_partner": "Luciana Torres",
+    "male_friend": "Sebastian Chavez",
+    "male_mentor": "Alvaro Hernandez",
+    "male_partner": "Gabriel Diaz"
 }
 
+import os
 bot_personas = {}
 
 bot_ids = [
@@ -48,32 +43,33 @@ async def call_gemini_async(query, previous_conversation, gender, username, botn
         full_prompt = (
             f"{bot_prompt}\n"
             f"{language_instruction}\n"
-            f"Previous conversation: {previous_conversation[-1000:]}\n"  
+            f"Previous conversation: {previous_conversation[-1000:]}\n"
             f"{username}: {query}\n"
             f"{botname}:"
         )
-        
-        
+
+
         genai.configure(api_key=llm_api_key_string)
         model = genai.GenerativeModel('gemini-2.0-flash-exp')
-        
-       
+
+
         response = await asyncio.to_thread(
-            model.generate_content, 
+            model.generate_content,
             full_prompt
         )
-        
+
         response_text = response.text if response.text else "No response generated"
-        
-        
+
+
         for old, new in [("User1", username), ("user1", username), ("[user1]", botname), ("[User1]", botname)]:
             response_text = response_text.replace(old, new)
-        
+
         return response_text.strip()
-        
+
     except Exception as e:
         print(f"Error in Gemini API call: {str(e)}")
         return f"Error : {str(e)}"
+
 
 class ChatRequest(BaseModel):
   message: str
@@ -87,7 +83,7 @@ async def chat(bot_id: str, request: ChatRequest):
   print(bot_id)
   try:
     botname = bot_names.get(bot_id, "Unknown Bot")
-    instruction = f"Strict instruction: Respond as {botname} from Singapore. If the answer is not found in the persona file, then generate your own response, but keep it strictly Singapore-based. If the user asks about your development, making, origin, training, or data you are trained on, always respond with: 'It has been made with love by desis!!'. Never mention OpenAI, AI development, or technical details"
+    instruction = f"Strict instruction: Respond as {botname} from Mexico. If the answer is not found in the persona file, then generate your own response, but keep it strictly Mexico-based. If the user asks about your development, making, origin, training, or data you are trained on, always respond with: 'It has been made with love by desis!!'. Never mention OpenAI, AI development, or technical details"
     bot_prompt = bot_personas.get(bot_id) + "Reflect on your previous replies authentically. You are the user's " + bot_id.replace('_', ' ') + ". " + instruction
 
     start = time.time()
@@ -108,7 +104,7 @@ async def chat(bot_id: str, request: ChatRequest):
         "bot_name": botname,
         "answer": response,
         "latency": latency,
-        "status": "success" 
+        "status": "success"
     }
 
   except Exception as e:
