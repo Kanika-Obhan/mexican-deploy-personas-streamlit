@@ -1,1 +1,1 @@
-# singapore-personas-streamlit
+# mexican-deploy-personas-streamlit
