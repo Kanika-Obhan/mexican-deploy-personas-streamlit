@@ -1,4 +1,4 @@
-name: Deploy Singapore Personas to Google Cloud Platform
+name: Deploy Mexico Personas to Google Cloud Platform
 
 on:
   push:
@@ -51,7 +51,7 @@ jobs:
         Mandarin" > TO_INPUT/languages.txt
         
         # Copy user_info.txt to TO_INPUT
-        cp user_info.txt TO_INPUT/user_info.txt || echo "Name: Anushka\nGender: Female" > TO_INPUT/user_info.txt
+        cp user_info.txt TO_INPUT/user_info.txt || echo "Name: Kanika\nGender: Female" > TO_INPUT/user_info.txt
         
         echo "✅ Required directories and files created"
 
@@ -116,7 +116,7 @@ jobs:
             'message': 'Hello, how are you?',
             'previous_conversation': '',
             'gender': 'female',
-            'username': 'Anushka',
+            'username': 'Kanika',
             'language': 'English'
         }
         
@@ -180,7 +180,7 @@ jobs:
         echo "English
         Mandarin" > TO_INPUT/languages.txt
         
-        cp user_info.txt TO_INPUT/user_info.txt || echo "Name: Anushka\nGender: Female" > TO_INPUT/user_info.txt
+        cp user_info.txt TO_INPUT/user_info.txt || echo "Name: Kanika\nGender: Female" > TO_INPUT/user_info.txt
         
         # Fix to_run.py for deployment
         cat > to_run.py << 'EOF'
@@ -325,7 +325,7 @@ jobs:
         echo "🧪 Testing FastAPI health..."
         curl -f "$FASTAPI_URL/docs" > /dev/null && echo "✅ FastAPI docs accessible" || echo "⚠️ FastAPI docs check failed"
         echo ""
-        echo "🎯 Your Singapore Personas app is ready to use!"
+        echo "🎯 Your Mexico Personas app is ready to use!"
 
     - name: Cleanup old Docker images
       run: |
@@ -353,10 +353,10 @@ jobs:
         if [ "${{ needs.deploy.result }}" == "success" ]; then
           echo ""
           echo "🎉 =========================================="
-          echo "✅ SINGAPORE PERSONAS DEPLOYMENT SUCCESS!"
+          echo "✅ MEXICO PERSONAS DEPLOYMENT SUCCESS!"
           echo "🎉 =========================================="
           echo ""
-          echo "🌟 Your Singapore Personas Streamlit application is now live!"
+          echo "🌟 Your Mexico Personas Streamlit application is now live!"
           echo ""
           echo "📋 What's been deployed:"
           echo "   ✅ FastAPI Backend with Gemini AI integration"
@@ -368,7 +368,7 @@ jobs:
           echo "🔗 Next Steps:"
           echo "   1. Visit your Streamlit frontend URL (check deploy step above)"
           echo "   2. Select a persona and configure traits"
-          echo "   3. Start chatting with your Singapore AI personas!"
+          echo "   3. Start chatting with your Mexico AI personas!"
           echo "   4. Try different languages and personalities"
           echo ""
           echo "📊 Monitor your deployment:"
